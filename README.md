@@ -26,6 +26,7 @@ O projeto foi desenvolvido com foco no aprendizado e na aplicação prática dos
 - Construtores
 - Getters e setters
 - Herança
+- Polimorfismo
 - Sobrescrita de métodos (`@Override`)
 - ArrayList
 - Estruturas de repetição

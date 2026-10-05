@@ -70,6 +70,21 @@ public class Menu {
         sc.nextLine();
 
         System.out.println();
+        System.out.println("--- Tipo de Animal ---");
+        System.out.println("1 - Cachorro");
+        System.out.println("2 - Gato");
+        System.out.print("Escolha uma opção: ");
+        int tipo = sc.nextInt();
+        sc.nextLine();
+
+        //Evita cadastrar um animal sem tipo válido
+        if(tipo != 1 && tipo != 2){
+            System.out.println();
+            System.out.println("Tipo inválido!");
+            return;
+        }
+
+        System.out.println();
         System.out.print("Nome: ");
         String nome = sc.nextLine();
 
@@ -86,11 +101,26 @@ public class Menu {
         System.out.print("Sexo: ");
         String sexo = sc.nextLine();
 
-        Animal novoAnimal = new Animal(nome, cor, raca, idade, sexo, false);
+        //Variável declarada fora do if/else para que continue existindo depois dos blocos
+        //O tipo é Animal (superclasse), então a variável pode guardar um Cachorro ou um Gato
+        Animal novoAnimal;
+
+        if(tipo == 1){
+            System.out.print("Porte (pequeno/médio/grande): ");
+            String porte = sc.nextLine();
+            novoAnimal = new Cachorro(porte, nome, cor, raca, idade, sexo, false);
+        } else {
+            System.out.print("Aceita outros animais? (s/n): ");
+            //Lê a resposta, remove espaços extras com trim() e converte para boolean
+            boolean aceita = sc.nextLine().trim().equalsIgnoreCase("s");
+            novoAnimal = new Gato(aceita, nome, cor, raca, idade, sexo, false);
+        }
+
+        //Adiciona o animal (Cachorro ou Gato) à lista de animais cadastrados
         animais.add(novoAnimal);
 
         System.out.println();
-        System.out.println("Pet cadastrado com sucesso!");
+        System.out.println("Pet cadastrado com sucesso!"); // Exibe a mensagem de confirmação para o usuário
     }
 
     private void listarAnimal() {
@@ -106,8 +136,21 @@ public class Menu {
             System.out.println("Raça: " + animal.getRaca());
             System.out.println("Idade: " + animal.getIdade());
             System.out.println("Sexo: " + animal.getSexo());
+            exibirDadosEspecificos(animal);
 
             System.out.println("-------------------------");
+        }
+    }
+
+    //Exibe os atributos exclusivos de cada subclasse
+    //O instanceof verifica o tipo real do objeto antes de acessar métodos que só existem em Gato ou Cachorro
+    private void exibirDadosEspecificos(Animal animal) {
+        if (animal instanceof Gato gato) {
+            System.out.println("Tipo: Gato");
+            System.out.println("Aceita outros animais: " + (gato.isAceitaOutrosAnimais() ? "Sim" : "Não"));
+        } else if (animal instanceof Cachorro cachorro) {
+            System.out.println("Tipo: Cachorro");
+            System.out.println("Porte: " + cachorro.getPorte());
         }
     }
 
@@ -131,6 +174,7 @@ public class Menu {
                 System.out.println("Idade: " + animal.getIdade());
                 System.out.println("Sexo: " + animal.getSexo());
                 System.out.println("Adotado: " + animal.isAdotado());
+                exibirDadosEspecificos(animal);
 
                 encontrado = true;
 

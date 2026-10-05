@@ -56,10 +56,12 @@ public class Animal {
         this.adotado = adotado;
     }
 
+    //MÉTODO SOM QUE O ANIMAL FAZ
     public void emitirSom(){
         System.out.println("Som do animal!");
     }
 
+    //Retorna uma representação textual do objeto Animal, exibindo todos os seus atributos
     @Override
     public String toString() {
         return "Animal {nome = " + nome + ", cor = " + cor + ", raca = " + raca + ", idade = " + idade + ", sexo = " + sexo
